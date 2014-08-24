@@ -17,7 +17,7 @@
 <resources>
 
     <string name="app_name">Ludum Dare 48</string>
-    <string name="app_id">237D9AA7</string>
+    <string name="app_id">6D91551A</string>
     <string name="namespace">urn:x-cast:com.google.cast.sample.helloworld</string>
     <string name="action_settings">Settings</string>
     <string name="message_to_cast">Message to Cast…</string>

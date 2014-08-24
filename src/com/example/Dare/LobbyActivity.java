@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,8 +18,15 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.android.gms.cast.Cast;
+import com.google.android.gms.cast.CastDevice;
 import com.ludum.dare.R;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -31,10 +39,14 @@ public class LobbyActivity extends Activity {
     private Button button;
     private UserAdapter userAdapter;
 
+    public String message;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.lobby_layout);
+
+        //Log.d("Message HERE", message);
 
         button = (Button) findViewById(R.id.start);
 
@@ -47,10 +59,11 @@ public class LobbyActivity extends Activity {
         });
 
         listView = (ListView) findViewById(R.id.player_list);
-        usernames.addAll(getUsernames());
+        //usernames.addAll(getUsernames());
 
         userAdapter = new UserAdapter(getApplicationContext(), R.layout.lobby_adapter, usernames);
         listView.setAdapter(userAdapter);
+
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -59,17 +72,31 @@ public class LobbyActivity extends Activity {
             }
         });
     }
-
+    /*
     private List<String> getUsernames(){
         List<String> names = new ArrayList<String>();
-        names.add("Josh");
-        names.add("Nate");
-        names.add("Shane");
-        names.add("Kris");
+        try {
+            JSONArray jsonArray = new JSONArray(message);
+
+            for(int i=0; i<jsonArray.length(); i++){
+                JSONObject playerName = jsonArray.getJSONObject(i);
+                names.add(playerName.get("name").toString());
+            }
+        }
+        catch (JSONException ex) {
+            ex.printStackTrace();
+        }
+
+        Log.d("Names Here", names.toString());
 
         return names;
     }
-
+    */
+    @Override
+    protected void onResume(){
+        super.onResume();
+        //usernames = getUsernames();
+    }
 
     private class UserAdapter extends ArrayAdapter<String> {
 
@@ -82,6 +109,7 @@ public class LobbyActivity extends Activity {
             this.context = context;
             this.names = names;
             this.resource = resource;
+
         }
 
         public int getCount(){
