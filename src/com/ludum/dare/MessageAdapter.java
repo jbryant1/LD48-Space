@@ -13,13 +13,13 @@ import java.util.List;
 /**
  * Created by kris on 8/24/14.
  */
-public class MessageAdapter extends ArrayAdapter<MessageObject> {
+public class MessageAdapter extends com.nhaarman.listviewanimations.ArrayAdapter<MessageObject> {
 
 
     Context mContext;
 
-    public MessageAdapter(Context context, int resource, List<MessageObject> objects) {
-        super(context, resource, objects);
+    public MessageAdapter(Context context, List<MessageObject> objects) {
+        super(objects);
         mContext = context;
     }
 
@@ -35,7 +35,7 @@ public class MessageAdapter extends ArrayAdapter<MessageObject> {
         TextView message = (TextView)v.findViewById(R.id.text);
 
         //If me or you
-        if(getItem(position).UserID == "ME"){
+        if(getItem(position).userID == "ME"){
             //Set Message for me
 
             message.setPadding(25,15,15,15);
