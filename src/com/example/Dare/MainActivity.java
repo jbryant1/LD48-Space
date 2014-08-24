@@ -181,6 +181,7 @@ public class MainActivity extends ActionBarActivity {
 				}
 
 			};
+
 			// Connect to Google Play services
 			mConnectionCallbacks = new ConnectionCallbacks();
 			mConnectionFailedListener = new ConnectionFailedListener();
@@ -193,6 +194,10 @@ public class MainActivity extends ActionBarActivity {
 					.build();
 
 			mApiClient.connect();
+
+            Intent i = new Intent(getApplicationContext(), LobbyActivity.class);
+            startActivity(i);
+
 		} catch (Exception e) {
 			Log.e(TAG, "Failed launchReceiver", e);
 		}
