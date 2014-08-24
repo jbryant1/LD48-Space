@@ -26,11 +26,6 @@ import java.io.IOException;
 
 public class SimpleService extends Service {
 
-    private static final int REQUEST_CODE = 1;
-
-    private MediaRouter mMediaRouter;
-    private MediaRouteSelector mMediaRouteSelector;
-    private MediaRouter.Callback mMediaRouterCallback;
     private CastDevice mSelectedDevice;
     private GoogleApiClient mApiClient;
 
