@@ -1,0 +1,48 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.ludum.dare.Chat">
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+
+
+    <EditText
+        android:id="@+id/chatBox"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="40dp"
+        android:background="#FFFFFF"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@+id/sendButton"
+        android:textColor="#000000"/>
+
+    <Button
+        android:id="@+id/sendButton"
+        android:layout_margin="0dp"
+        android:padding="0dp"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:text="Send"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true" />
+
+        <ListView
+            android:id="@+id/chatView"
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/chatBox"
+            android:divider="@null"
+            android:stackFromBottom="true">
+
+
+
+    </ListView>
+
+    </RelativeLayout>
+
+</FrameLayout>
