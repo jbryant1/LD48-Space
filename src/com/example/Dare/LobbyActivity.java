@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.google.android.gms.cast.Cast;
 import com.google.android.gms.cast.CastDevice;
+import com.ludum.dare.GameActivity;
 import com.ludum.dare.R;
 
 import org.json.JSONArray;
