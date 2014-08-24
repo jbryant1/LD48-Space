@@ -56,14 +56,15 @@
         </activity>
 
         <service
-            android:name="com.example.Dare.CastingService"
-            android:exported="false" >
-        </service>
-        <service
             android:name="com.example.Dare.SimpleService"
             android:enabled="true"
             android:exported="true" >
         </service>
+
+        <activity
+            android:name=".GameActivity"
+            android:label="@string/title_activity_game" >
+        </activity>
     </application>
 
 </manifest>
