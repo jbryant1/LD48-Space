@@ -185,6 +185,8 @@ public class MainActivity extends ActionBarActivity {
 
 
             Intent lobbyActivity = new Intent(getApplicationContext(), LobbyActivity.class);
+            lobbyActivity.putExtra("device", mSelectedDevice);
+            lobbyActivity.putExtra("username", username.getText().toString());
             startActivity(lobbyActivity);
 
             //launchReceiver();
@@ -436,7 +438,7 @@ public class MainActivity extends ActionBarActivity {
     /**
      * Send a text message to the receiver
      *
-     * @param message
+     * @param
 
     private void sendMessage(String message) {
         if (mApiClient != null && mHelloWorldChannel != null) {

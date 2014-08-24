@@ -40,6 +40,9 @@ public class LobbyActivity extends Activity {
     private Button button;
     private UserAdapter userAdapter;
 
+    private String username;
+    private CastDevice mSelectedDevice;
+
     public String message;
 
     @Override
@@ -55,6 +58,8 @@ public class LobbyActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Intent gameIntent = new Intent(getApplicationContext(), GameActivity.class);
+                gameIntent.putExtra("device", mSelectedDevice);
+                gameIntent.putExtra("username", username);
                 startActivity(gameIntent);
             }
         });
