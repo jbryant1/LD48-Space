@@ -183,6 +183,10 @@ public class MainActivity extends ActionBarActivity {
             startService.putExtra("username", username.getText().toString());
             startService(startService);
 
+
+            Intent lobbyActivity = new Intent(getApplicationContext(), LobbyActivity.class);
+            startActivity(lobbyActivity);
+
             //launchReceiver();
         }
 

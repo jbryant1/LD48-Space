@@ -250,11 +250,6 @@ public class SimpleService extends Service {
                                     public void onResult(Cast.ApplicationConnectionResult result) {
                                         Status status = result.getStatus();
                                         if (status.isSuccess()) {
-                                            ApplicationMetadata applicationMetadata = result.getApplicationMetadata();
-                                            String sessionId = result.getSessionId();
-                                            String applicationStatus = result.getApplicationStatus();
-                                            boolean wasLaunched = result.getWasLaunched();
-
                                             mApplicationStarted = true;
 
                                             mHelloWorldChannel = new HelloWorldChannel();
