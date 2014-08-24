@@ -7,5 +7,11 @@ public class MessageObject {
 
 
     String message;
-    String UserID;
+    String userID;
+
+
+    public MessageObject(){
+        message = "Text";
+        userID = "ME";
+    }
 }

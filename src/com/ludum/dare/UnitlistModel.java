@@ -12,6 +12,17 @@ public class UnitlistModel {
     int maxHealth;
     int curHealth;
 
+    public void UnitlistModel(){
+
+        name = "Player";
+        happyness = 0;
+        strength = 25;
+        intelegence = 25;
+        int maxHealth = 25;
+        int curHealth = maxHealth;
+
+    }
+
 
 
 }

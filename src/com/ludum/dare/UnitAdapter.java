@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.nhaarman.listviewanimations.ArrayAdapter;
 import com.nhaarman.listviewanimations.itemmanipulation.expandablelistitem.ExpandableListItemAdapter;
 
 import java.util.List;
@@ -21,42 +22,36 @@ public class UnitAdapter extends ExpandableListItemAdapter<UnitlistModel> {
 
     public UnitAdapter(Context context, List<UnitlistModel> units){
 
-        super(context, R.layout.activity_expandablelistitem_card, R.id.activity_expandablelistitem_card_title, R.id.activity_expandablelistitem_card_content, units);
+        super(context,R.layout.activity_expandablelistitem_card, R.id.activity_expandablelistitem_card_title, R.id.activity_expandablelistitem_card_content,units);
         mContext = context;
 
     }
 
 
 
+
     @NonNull
     @Override
-    public View getTitleView(int i, @Nullable View view, @NonNull ViewGroup viewGroup) {
+    public View getTitleView(int i, @Nullable View v, @NonNull ViewGroup viewGroup) {
 
-        if(view == null){
+        if(v == null){
             LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View v = inflater.inflate(R.layout.unit_title, viewGroup, false);
+            v = inflater.inflate(R.layout.unit_title, viewGroup, false);
 
         }
 
-
-
-        return view;
+        return v;
     }
 
     @NonNull
     @Override
-    public View getContentView(int i, @Nullable View view, @NonNull ViewGroup viewGroup) {
-
-
-        if(view == null){
+    public View getContentView(int i, @Nullable View v, @NonNull ViewGroup viewGroup) {
+        if(v == null){
             LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View v = inflater.inflate(R.layout.unit_content, viewGroup, false);
+            v = inflater.inflate(R.layout.unit_content, viewGroup, false);
 
         }
 
-        //Logic for what actions this character can do
-
-
-        return view;
+        return v;
     }
 }

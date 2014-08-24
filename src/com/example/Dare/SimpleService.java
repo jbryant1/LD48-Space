@@ -56,11 +56,15 @@ public class SimpleService extends Service {
 
     @Override
     public int onStartCommand (Intent intent, int flags, int startId) {
-        if(intent.getExtras().get("device") != null) {
-            mSelectedDevice = (CastDevice) intent.getExtras().get("device");
-        }
-        if(intent.getExtras().get("username") != null) {
-            username = (String) intent.getExtras().get("username");
+
+        if(intent != null) {
+
+            if (intent.hasExtra("device")) {
+                mSelectedDevice = (CastDevice) intent.getExtras().get("device");
+            }
+            if (intent.hasExtra("username")) {
+                username = (String) intent.getExtras().get("username");
+            }
         }
 
         launchReceiver();
