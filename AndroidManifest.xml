@@ -49,6 +49,9 @@
         <activity
             android:name="com.example.Dare.LobbyActivity"
             android:label="@string/title_activity_lobby" >
+            <intent-filter>
+                <action android:name="com.example.Dare.lobby.receiver" />
+            </intent-filter>
         </activity>
 
         <service

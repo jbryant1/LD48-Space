@@ -166,14 +166,12 @@ public class MainActivity extends ActionBarActivity {
      * Callback for MediaRouter events
      */
 
-    int numberConnected = 0;
     private class MyMediaRouterCallback extends MediaRouter.Callback {
 
         @Override
         public void onRouteSelected(MediaRouter router, MediaRouter.RouteInfo info) {
             Log.d(TAG, "onRouteSelected ");
             // Handle the user route selection.
-            numberConnected++;
             mSelectedDevice = CastDevice.getFromBundle(info.getExtras());
             TextTrackStyle textTrackStyle = new TextTrackStyle();
             textTrackStyle.setForegroundColor(Color.RED);
@@ -195,11 +193,7 @@ public class MainActivity extends ActionBarActivity {
         @Override
         public void onRouteUnselected(MediaRouter router, MediaRouter.RouteInfo info) {
             Log.d(TAG, "onRouteUnselected: info=" + info);
-            numberConnected--;
-            if(numberConnected <= 0) {
-                //teardown();
-                stopNewService();
-            }
+            //teardown();
             stopNewService();
             mSelectedDevice = null;
         }

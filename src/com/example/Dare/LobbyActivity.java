@@ -1,8 +1,10 @@
 package com.example.Dare;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,6 +19,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.cast.Cast;
 import com.google.android.gms.cast.CastDevice;
@@ -35,7 +38,7 @@ import java.util.Map;
 
 public class LobbyActivity extends Activity {
 
-    private List<String> usernames = new ArrayList<String>();
+    private List<String> usernames;
     private ListView listView;
     private Button button;
     private UserAdapter userAdapter;
@@ -58,31 +61,31 @@ public class LobbyActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Intent gameIntent = new Intent(getApplicationContext(), GameActivity.class);
-                gameIntent.putExtra("device", mSelectedDevice);
-                gameIntent.putExtra("username", username);
                 startActivity(gameIntent);
             }
         });
 
         listView = (ListView) findViewById(R.id.player_list);
         //usernames.addAll(getUsernames());
-
-        userAdapter = new UserAdapter(getApplicationContext(), R.layout.lobby_adapter, usernames);
-        listView.setAdapter(userAdapter);
-
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-            }
-        });
     }
-    /*
-    private List<String> getUsernames(){
+
+    private BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String jsonString = intent.getStringExtra("json");
+            usernames = new ArrayList<String>();
+            usernames.addAll(getUsernames(jsonString));
+            userAdapter = new UserAdapter(getApplicationContext(), R.layout.lobby_adapter, usernames);
+            userAdapter.notifyDataSetChanged();
+            listView.setAdapter(userAdapter);
+            Log.d("Uasdfasfd", jsonString);
+        }
+    };
+
+    private List<String> getUsernames(String jsonMessage){
         List<String> names = new ArrayList<String>();
         try {
-            JSONArray jsonArray = new JSONArray(message);
+            JSONArray jsonArray = new JSONArray(jsonMessage);
 
             for(int i=0; i<jsonArray.length(); i++){
                 JSONObject playerName = jsonArray.getJSONObject(i);
@@ -97,11 +100,19 @@ public class LobbyActivity extends Activity {
 
         return names;
     }
-    */
+
     @Override
     protected void onResume(){
         super.onResume();
+        registerReceiver(receiver, new IntentFilter("com.example.Dare.lobby.retriever"));
+
         //usernames = getUsernames();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unregisterReceiver(receiver);
     }
 
     private class UserAdapter extends ArrayAdapter<String> {
@@ -115,7 +126,6 @@ public class LobbyActivity extends Activity {
             this.context = context;
             this.names = names;
             this.resource = resource;
-
         }
 
         public int getCount(){

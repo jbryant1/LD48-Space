@@ -56,15 +56,17 @@ public class SimpleService extends Service {
 
     @Override
     public int onStartCommand (Intent intent, int flags, int startId) {
-        if(intent.getExtras().get("device") != null) {
+        if(intent != null) {
             mSelectedDevice = (CastDevice) intent.getExtras().get("device");
-        }
-        if(intent.getExtras().get("username") != null) {
             username = (String) intent.getExtras().get("username");
+            launchReceiver();
         }
-
-        launchReceiver();
         return START_STICKY;
+    }
+
+    @Override
+    public void onDestroy(){
+        teardown();
     }
 
     /**
@@ -126,6 +128,7 @@ public class SimpleService extends Service {
      * Custom message channel
      */
     public class HelloWorldChannel implements Cast.MessageReceivedCallback {
+
         /**
          * @return custom namespace
          */
@@ -139,9 +142,14 @@ public class SimpleService extends Service {
         @Override
         public void onMessageReceived(CastDevice castDevice, String namespace, String message) {
             Log.d("MEssage", "onMessageReceived: " + message);
-            //startNewService();
+            transferMessage(message);
         }
 
+        public void transferMessage(String message){
+            Intent intent = new Intent("com.example.Dare.lobby.retriever");
+            intent.putExtra("json", message);
+            sendBroadcast(intent);
+        }
     }
 
     private void teardown() {
@@ -150,10 +158,11 @@ public class SimpleService extends Service {
             if (mApplicationStarted) {
                 if (mApiClient.isConnected()  || mApiClient.isConnecting()) {
                     try {
-                        Cast.CastApi.stopApplication(mApiClient, mSessionId);
+                        sendMessage(createJSONString(mSessionId, "leave"));
+                        //Closes the apps
+                        //Cast.CastApi.stopApplication(mApiClient, mSessionId);
                         if (mHelloWorldChannel != null) {
-                            Cast.CastApi.removeMessageReceivedCallbacks(
-                                    mApiClient,
+                            Cast.CastApi.removeMessageReceivedCallbacks(mApiClient,
                                     mHelloWorldChannel.getNamespace());
                             mHelloWorldChannel = null;
                         }
@@ -185,7 +194,7 @@ public class SimpleService extends Service {
     }
 
 
-    private String createJSONString(String sessionId, boolean hasJoined){
+    private String createJSONString(String sessionId, String action){
         JSONObject player = new JSONObject();
         try{
             player.put("id", sessionId);
@@ -196,9 +205,7 @@ public class SimpleService extends Service {
                 player.put("name", "player");
             }
 
-            if(hasJoined) {
-                player.put("command", "join");
-            }
+             player.put("command", action);
         }
         catch (JSONException ex){
             ex.printStackTrace();
@@ -303,9 +310,9 @@ public class SimpleService extends Service {
 
                                                 // set the initial instructions
                                                 // on the receiver
-                                                Log.d("JSON OBJECT", createJSONString(mSessionId, true));
+                                                Log.d("JSON OBJECT", createJSONString(mSessionId, "join"));
                                                 Log.d("INFO", String.valueOf(mSelectedDevice.getFriendlyName()));
-                                                sendMessage(createJSONString(mSessionId, true));
+                                                sendMessage(createJSONString(mSessionId, "join"));
                                                 //startNewService();
                                                 //Intent i = new Intent(getApplicationContext(), LobbyActivity.class);
                                                 //startActivity(i);
