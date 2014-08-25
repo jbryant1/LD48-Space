@@ -1,7 +1,10 @@
 package com.example.Dare;
 
 import android.app.Service;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v7.media.MediaRouteSelector;
@@ -23,6 +26,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class SimpleService extends Service {
 
@@ -68,12 +72,14 @@ public class SimpleService extends Service {
 
             launchReceiver();
         }
+        registerReceiver(receiver, new IntentFilter("com.example.Dare.service.receiver"));
         return START_STICKY;
     }
 
     @Override
     public void onDestroy(){
         teardown();
+        unregisterReceiver(receiver);
     }
 
     /**
@@ -158,6 +164,13 @@ public class SimpleService extends Service {
             sendBroadcast(intent);
         }
     }
+
+    private BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            sendMessage(createJSONString(mSessionId, "startGame"));
+        }
+    };
 
     private void teardown() {
         Log.d("CLOSING", "teardown");

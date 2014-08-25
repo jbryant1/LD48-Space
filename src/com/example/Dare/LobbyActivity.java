@@ -60,6 +60,10 @@ public class LobbyActivity extends Activity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent("com.example.Dare.service.receiver");
+                intent.putExtra("json", message);
+                sendBroadcast(intent);
+
                 Intent gameIntent = new Intent(getApplicationContext(), GameActivity.class);
                 startActivity(gameIntent);
             }
